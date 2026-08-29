@@ -1,0 +1,44 @@
+﻿# Veltrix Sports .gitignore
+
+# Flutter
+.dart_tool/
+.packages
+build/
+
+# Android
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Python
+__pycache__/
+*.pyc
+
+# Temporary
+*.tmp
+*.bak
+
+# Keep important files
+!diagrams/
+!*.md
+!*.txt
+!*.docx

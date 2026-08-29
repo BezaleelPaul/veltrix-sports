@@ -1,0 +1,227 @@
+================================================================================
+                    VELTRIX SPORTS - COST BREAKDOWN
+================================================================================
+
+PROJECT: Veltrix Sports Platform
+TYPE: Coaching, Events & Ticketing
+PLATFORMS: Android, iOS, Web
+
+================================================================================
+1. DEVELOPMENT TOOLS (One-Time)
+================================================================================
+
+Item                                    Cost (₹)
+------------------------------------    --------
+Flutter SDK                             Free
+Dart SDK                                Free
+VS Code                                 Free
+Git                                     Free
+Node.js                                 Free
+Java (OpenJDK)                          Free
+Android SDK                             Free
+------------------------------------    --------
+Subtotal                                ₹0
+
+Additional Tools:
+VS Code Extensions                      Free
+Firebase CLI                            Free
+Supabase CLI                            Free
+------------------------------------    --------
+Subtotal                                ₹0
+
+TOTAL TOOLS                             ₹0
+
+================================================================================
+2. CLOUD INFRASTRUCTURE (Monthly)
+================================================================================
+
+OPTION A: FREE TIER (12 months)
+------------------------------------
+AWS EC2 (t2.micro)                      ₹0 (free tier)
+AWS RDS (db.t2.micro)                   ₹0 (free tier)
+AWS S3 (5GB)                            ₹0 (free tier)
+CloudFront (1TB)                        ₹0 (free tier)
+Cognito (50K users)                     ₹0 (free tier)
+SNS (1M publishes)                      ₹0 (free tier)
+------------------------------------
+Monthly Total                           ₹0
+Annual Total                            ₹0
+
+OPTION B: MINIMAL PAID
+------------------------------------
+AWS EC2 (t3.small)                      ₹1,400/mo
+AWS RDS (db.t3.small)                   ₹2,800/mo
+AWS S3 (10GB)                           ₹200/mo
+CloudFront (100GB)                      ₹800/mo
+ElastiCache                             ₹1,400/mo
+SNS/SES                                 ₹200/mo
+------------------------------------
+Monthly Total                           ₹6,800
+Annual Total                            ₹81,600
+
+OPTION C: PRODUCTION
+------------------------------------
+AWS EC2 (t3.medium)                     ₹2,800/mo
+AWS RDS (db.t3.medium)                  ₹5,600/mo
+AWS S3 (50GB)                           ₹500/mo
+CloudFront (500GB)                      ₹3,000/mo
+ElastiCache                             ₹2,800/mo
+Cognito                                 ₹1,400/mo
+SNS/SES                                 ₹800/mo
+WAF                                     ₹2,800/mo
+------------------------------------
+Monthly Total                           ₹19,700
+Annual Total                            ₹2,36,400
+
+================================================================================
+3. THIRD-PARTY SERVICES (Monthly)
+================================================================================
+
+Service                     Cost
+------------------------    --------
+Razorpay                    2% per transaction
+Firebase                    Free (basic)
+Email (SES)                 ₹100-400/mo
+------------------------    --------
+Monthly Total               ₹100-400 + transaction fees
+
+================================================================================
+4. DEVELOPMENT COST (With Salary)
+================================================================================
+
+OPTION A: MVP TEAM (5 people, 2 weeks)
+------------------------------------
+Role                        Cost (₹)
+------------------------    --------
+Flutter Dev (2)             ₹20,000-40,000
+Backend Dev (1)             ₹10,000-20,000
+UI/UX Designer (1)          ₹7,500-15,000
+QA Engineer (1)             ₹6,250-12,500
+------------------------    --------
+Subtotal                    ₹43,750-87,500
+
+Tools + Infrastructure      ₹11,100
+------------------------    --------
+TOTAL MVP                   ₹54,850-98,600
+
+OPTION B: FULL TEAM (9 people, 3 months)
+------------------------------------
+Role                        Cost (₹)
+------------------------    --------
+Flutter Dev (3)             ₹1,80,000-3,60,000
+Backend Dev (2)             ₹1,20,000-2,40,000
+UI/UX Designer (1)          ₹45,000-90,000
+QA Engineer (2)             ₹75,000-1,50,000
+DevOps (1)                  ₹75,000-1,50,000
+------------------------    --------
+Subtotal                    ₹4,95,000-9,90,000
+
+Tools + Infrastructure      ₹33,300
+------------------------    --------
+TOTAL FULL PRODUCT          ₹5,28,300-10,23,300
+
+OPTION C: ENTERPRISE (13 people, 6 months)
+------------------------------------
+Role                        Cost (₹)
+------------------------    --------
+Flutter Dev (4)             ₹4,80,000-9,60,000
+Backend Dev (3)             ₹3,60,000-7,20,000
+UI/UX Designer (2)          ₹1,20,000-2,40,000
+QA Engineer (2)             ₹1,50,000-3,00,000
+DevOps (1)                  ₹1,20,000-2,40,000
+Project Manager (1)         ₹60,000-1,20,000
+------------------------    --------
+Subtotal                    ₹12,90,000-25,80,000
+
+Tools + Infrastructure      ₹1,17,600
+------------------------    --------
+TOTAL ENTERPRISE            ₹14,07,600-26,97,600
+
+================================================================================
+5. TOTAL PROJECT COST SUMMARY
+================================================================================
+
+Duration        Minimum         Full Team       Enterprise
+-----------     -----------     -----------     -----------
+2 weeks         ₹55K-1L         ₹1L-1.8L       ₹1.4L-2.5L
+3 months        ₹2.8L-5.5L      ₹5.3L-10.2L    ₹7.2L-14L
+6 months        ₹5.7L-10.9L     ₹10.3L-20.2L   ₹14.1L-27L
+12 months       ₹11.3L-21.8L    ₹20.6L-40.4L   ₹28.9L-56.3L
+
+================================================================================
+6. RECOMMENDED BUDGET
+================================================================================
+
+For a startup/MVP:
+------------------------------------
+Development (2 weeks)       ₹55,000-1,00,000
+Infrastructure (6 months)   ₹0-40,800
+Third-party services        ₹1,000-5,000
+------------------------    --------
+TOTAL MVP BUDGET            ₹56,000-1,45,800
+
+For a full product:
+------------------------------------
+Development (3-6 months)    ₹5,00,000-15,00,000
+Infrastructure (1 year)     ₹0-2,36,400
+Third-party services        ₹5,000-25,000
+------------------------    --------
+TOTAL FULL BUDGET           ₹5,05,000-17,61,400
+
+================================================================================
+7. COST OPTIMIZATION TIPS
+================================================================================
+
+1. Use Free Tiers
+   - AWS Free Tier (12 months)
+   - Supabase Free Tier
+   - Firebase Free Tier
+
+2. Start with MVP
+   - Build only essential features
+   - Use existing templates
+   - Avoid over-engineering
+
+3. Use Open Source
+   - Flutter packages
+   - UI templates
+   - Animation libraries
+
+4. Outsource Smartly
+   - Freelance for specific tasks
+   - Use AI coding assistants
+   - Automate repetitive work
+
+5. Scale Gradually
+   - Start with basic infrastructure
+   - Upgrade as user base grows
+   - Monitor costs regularly
+
+================================================================================
+8. PAYMENT TERMS (Recommended)
+================================================================================
+
+MVP Project:
+------------------------------------
+- 50% advance
+- 50% on delivery
+
+Full Product:
+------------------------------------
+- 30% advance
+- 30% at midpoint
+- 40% on delivery
+
+Enterprise:
+------------------------------------
+- 20% advance
+- 20% per milestone
+- 20% on delivery
+
+================================================================================
+
+Document Version: 1.0
+Date: August 29, 2026
+Status: Ready for Review
+
+================================================================================
