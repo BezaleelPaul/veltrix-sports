@@ -1,0 +1,129 @@
+﻿Number of pages: 4
+
+=== PAGE 1 ===
+VELTRIX SPORTS
+Product Feature List ΓÇö Draft for Review
+Coaching  ┬╖  Events  ┬╖  Ticketing Platform
+Γûá  Checkmark = feature you already listed
+Γûá  Plus = suggested addition, not in your original list
+This document consolidates the features you listed across the Training Plan, Events, and Ticketing verticals, 
+removes duplicates, groups them by function, and flags gaps worth considering before this goes into scope/spec 
+documents for development.
+1. Training Plan (B2B & B2C)
+Core Platform
+Γ£ôUI/UX design
+Γ£ôUser database
+Γ£ôServer, hosting, and maintenance
+Γ£ôDomain
+Γ£ôBudget and cost planning
+Γ£ôCoach and athlete dashboards
+Γ£ôVarious landing pages
+Registration, Payments & Onboarding
+Γ£ôRegistration flow
+Γ£ôWelcome kit
+Γ£ôPayment gateway integration
+Γ£ôEmail ID / account setup
++Fitness and medical intake assessment at onboarding (injury history, baseline goals)
++Subscription / recurring billing management (vs. one-time payment only)
+Coaching Content & Plans
+Γ£ôRunning plans
+Γ£ôTriathlon plans
+Γ£ôBiking plans
+Γ£ôNutrition plan
+Γ£ôHydration plan
+Γ£ôStrength & conditioning (S&C) plan
+Γ£ôAI automation of plan generation
++Technique/education content library (videos, articles)
+
+=== PAGE 2 ===
+Integrations
+Γ£ôAPI integration
+Γ£ôDevice integration (wearables)
+Γ£ôTerrain integration
+Γ£ôWeather integration
+Γ£ôZoom / Google Meet integration
+Analytics & Engagement
+Γ£ôUser journey tracking
+Γ£ôVarious analytics
++Performance/progress tracking over time (PBs, training load, recovery trends)
++In-app coachΓÇôathlete messaging (separate from scheduled Zoom/Meet calls)
++Push notifications and reminders (missed session, upcoming workout)
++Referral program
++Customer support / helpdesk
+2. Events
+Core Platform
+Γ£ôUI/UX design
+Γ£ôUser database
+Γ£ôServer, hosting, and maintenance
+Γ£ôBudget and cost planning
+Γ£ôCoach and athlete dashboards
+Γ£ôVarious landing pages
+Registration, Ticketing & Payments
+Γ£ôRegistration flow
+Γ£ôTickets
+Γ£ôWelcome kit
+Γ£ôPayment gateway integration
+Γ£ôCoaching plan add-on (for event participants)
++Team / relay registration
++Waitlist management
++Promo / discount codes
++Refund and cancellation rules engine
+Integrations
+Γ£ôAPI integration
+Γ£ôDevice integration (wearables)
+
+=== PAGE 3 ===
+Γ£ôTerrain integration
+Γ£ôWeather integration
+Coaching Content & Plans (for event participants)
+Γ£ôRunning plans
+Γ£ôTriathlon plans
+Γ£ôBiking plans
+Γ£ôNutrition plan
+Γ£ôHydration plan
+Γ£ôStrength & conditioning (S&C) plan
+Γ£ôAI automation
+Race-Day & Post-Event Operations
++Organizer-side event creation and management tools
++Bib number allocation
++Volunteer management
++Route / course maps
++Live race tracking
++Results processing and e-certificate generation
++Race photo marketplace
++Sponsor and branding management
++Merchandise sales (kit sizing, add-ons)
++Post-event feedback survey
+Analytics
+Γ£ôUser journey tracking
+Γ£ôVarious analytics
+3. Ticketing Platform
+Positioned to replicate the India Running / Townscript model ΓÇö a self-serve marketplace where third-party 
+organizers (not just Veltrix Sports) can list and sell tickets to their own events.
+From Your List
+Γ£ôTicketing functionality (core reference: India Running / Townscript)
+Suggested Additions ΓÇö Marketplace Essentials
++Self-serve organizer dashboard (any organizer can create and manage listings)
++Multi-event public marketplace with search and filters (city, distance, date, sport)
++Custom registration form builder per event
++Multiple ticket tiers and pricing per event
+
+=== PAGE 4 ===
++QR code check-in at the venue
++Platform commission structure and automated payout/settlement to organizers
++Event reviews and ratings
++SEO-optimized public event pages
+4. Cross-Cutting (All Three Verticals)
+Γ£ôServer, hosting, maintenance, and domain (shared infrastructure)
+Γ£ôBudget planning
+Γ£ôAPI integrations
+Γ£ôVarious analytics
++Admin / CMS panel
++Data privacy and compliance (GDPR, India's DPDP Act ΓÇö relevant given health/fitness data)
++Marketing tools (email and SMS campaigns)
++Business-side revenue and reporting dashboard (distinct from athlete-facing analytics)
++Customer support / helpdesk
+Note: This is a working feature list for internal review and scoping, not a technical specification. Items marked with  
+a plus (+) are suggestions to evaluate for relevance and priority ΓÇö not all may be needed for an initial launch 
+(MVP) scope.
+

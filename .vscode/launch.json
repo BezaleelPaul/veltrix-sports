@@ -1,0 +1,82 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter (Debug)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [],
+      "flutterMode": "debug",
+      "flutterRun": {
+        "deviceId": "auto",
+        "additionalArgs": []
+      }
+    },
+    {
+      "name": "Flutter (Profile)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [],
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Flutter (Release)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [],
+      "flutterMode": "release"
+    },
+    {
+      "name": "Flutter (Debug - Chrome)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": ["-d", "chrome"],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Flutter (Debug - Edge)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": ["-d", "edge"],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Flutter (Debug - Windows)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": ["-d", "windows"],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Flutter (Attach)",
+      "type": "dart",
+      "request": "attach",
+      "program": "lib/main.dart"
+    },
+    {
+      "name": "Flutter (Run without Debugging)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [],
+      "flutterMode": "debug",
+      "skipDebug": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Flutter (All Platforms)",
+      "configurations": [
+        "Flutter (Debug)",
+        "Flutter (Debug - Chrome)",
+        "Flutter (Debug - Windows)"
+      ]
+    }
+  ]
+}
