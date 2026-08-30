@@ -8,75 +8,92 @@ class WebContactScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final isDark = ref.watch(webDarkModeProvider);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 32 : 64),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 900),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Text('Contact Us', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary))),
+              Center(child: Text('Contact Us', style: TextStyle(fontSize: isMobile ? 24 : 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary))),
               const SizedBox(height: 8),
-              Center(child: Text('Have a question? We\'d love to hear from you.', style: TextStyle(fontSize: 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary))),
-              const SizedBox(height: 48),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        color: isDark ? WebColors.darkCard : WebColors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: isDark ? WebColors.darkBorder : WebColors.grey100),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Send a Message', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
-                          const SizedBox(height: 24),
-                          _TextField(label: 'Name', isDark: isDark),
-                          const SizedBox(height: 16),
-                          _TextField(label: 'Email', isDark: isDark),
-                          const SizedBox(height: 16),
-                          _TextField(label: 'Subject', isDark: isDark),
-                          const SizedBox(height: 16),
-                          _TextField(label: 'Message', isDark: isDark, maxLines: 5),
-                          const SizedBox(height: 24),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(backgroundColor: WebColors.primary, foregroundColor: WebColors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                              child: const Text('Send Message', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        _ContactCard(icon: Icons.email_outlined, title: 'Email', detail: 'support@veltrixsports.com', isDark: isDark),
-                        const SizedBox(height: 16),
-                        _ContactCard(icon: Icons.phone_outlined, title: 'Phone', detail: '+91 98765 43210', isDark: isDark),
-                        const SizedBox(height: 16),
-                        _ContactCard(icon: Icons.location_on_outlined, title: 'Office', detail: 'Mumbai, Maharashtra\nIndia', isDark: isDark),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              Center(child: Text('Have a question? We\'d love to hear from you.', style: TextStyle(fontSize: isMobile ? 14 : 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary))),
+              SizedBox(height: isMobile ? 24 : 48),
+              _buildLayout(context, isDark, isMobile),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLayout(BuildContext context, bool isDark, bool isMobile) {
+    final formWidget = Container(
+      padding: EdgeInsets.all(isMobile ? 20 : 32),
+      decoration: BoxDecoration(
+        color: isDark ? WebColors.darkCard : WebColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? WebColors.darkBorder : WebColors.grey100),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Send a Message', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+          const SizedBox(height: 24),
+          _TextField(label: 'Name', isDark: isDark),
+          const SizedBox(height: 16),
+          _TextField(label: 'Email', isDark: isDark),
+          const SizedBox(height: 16),
+          _TextField(label: 'Subject', isDark: isDark),
+          const SizedBox(height: 16),
+          _TextField(label: 'Message', isDark: isDark, maxLines: 5),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(backgroundColor: WebColors.primary, foregroundColor: WebColors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+              child: const Text('Send Message', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final contactsWidget = Column(
+      children: [
+        _ContactCard(icon: Icons.email_outlined, title: 'Email', detail: 'support@veltrixsports.com', isDark: isDark),
+        const SizedBox(height: 16),
+        _ContactCard(icon: Icons.phone_outlined, title: 'Phone', detail: '+91 98765 43210', isDark: isDark),
+        const SizedBox(height: 16),
+        _ContactCard(icon: Icons.location_on_outlined, title: 'Office', detail: 'Mumbai, Maharashtra\nIndia', isDark: isDark),
+      ],
+    );
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          formWidget,
+          const SizedBox(height: 24),
+          contactsWidget,
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(flex: 2, child: formWidget),
+        const SizedBox(width: 32),
+        Expanded(child: contactsWidget),
+      ],
     );
   }
 }

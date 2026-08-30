@@ -8,6 +8,9 @@ class WebPricingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final isDark = ref.watch(webDarkModeProvider);
 
     final plans = [
@@ -37,25 +40,27 @@ class WebPricingScreen extends ConsumerWidget {
     ];
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 32 : 64),
       child: Column(
         children: [
           Text('Pricing', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: WebColors.primary)),
           const SizedBox(height: 12),
           Text('Simple, Transparent Pricing',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+              style: TextStyle(fontSize: isMobile ? 24 : 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
           const SizedBox(height: 12),
           Text('Choose the plan that fits your athletic journey.',
-              style: TextStyle(fontSize: 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
-          const SizedBox(height: 48),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+              style: TextStyle(fontSize: isMobile ? 14 : 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+          SizedBox(height: isMobile ? 24 : 48),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: isMobile ? 12 : 16,
+            runSpacing: isMobile ? 16 : 24,
             children: plans.map((p) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: SizedBox(
-                width: 340,
+                width: isMobile ? double.infinity : 340,
                 child: Container(
-                  padding: const EdgeInsets.all(32),
+                  padding: EdgeInsets.all(isMobile ? 20 : 32),
                   decoration: BoxDecoration(
                     color: isDark ? WebColors.darkCard : WebColors.white,
                     borderRadius: BorderRadius.circular(16),

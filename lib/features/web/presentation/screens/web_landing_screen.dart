@@ -9,6 +9,9 @@ class WebLandingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final isDark = ref.watch(webDarkModeProvider);
     return SingleChildScrollView(
       child: Column(
@@ -32,9 +35,12 @@ class _HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 100),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 48 : 100),
       decoration: BoxDecoration(
         gradient: isDark ? WebColors.darkGradient : const LinearGradient(
           colors: [Color(0xFFF0EEFF), Color(0xFFFFF0F3)],
@@ -56,39 +62,49 @@ class _HeroSection extends StatelessWidget {
                 child: const Text('🚀 Trusted by 10,000+ athletes across India',
                     style: TextStyle(color: WebColors.primary, fontSize: 14, fontWeight: FontWeight.w500)),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: isMobile ? 20 : 32),
               Text(
                 'Your Complete\nSports Platform',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 56,
+                  fontSize: isMobile ? 32 : (isTablet ? 44 : 56),
                   fontWeight: FontWeight.bold,
                   height: 1.15,
                   color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isMobile ? 12 : 20),
               Text(
                 'Find expert coaches, discover events, enroll in training plans,\nand manage your tickets — all in one place.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: isMobile ? 15 : 18,
                   color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary,
                   height: 1.6,
                 ),
               ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _PrimaryButton(label: 'Get Started Free', onTap: () => context.go('/signup')),
-                  const SizedBox(width: 16),
-                  _OutlineButton(label: 'Explore Training', isDark: isDark, onTap: () => context.go('/training')),
-                ],
-              ),
-              const SizedBox(height: 56),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              SizedBox(height: isMobile ? 24 : 40),
+              isMobile
+                  ? Column(
+                      children: [
+                        _PrimaryButton(label: 'Get Started Free', onTap: () => context.go('/signup')),
+                        const SizedBox(height: 12),
+                        _OutlineButton(label: 'Explore Training', isDark: isDark, onTap: () => context.go('/training')),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _PrimaryButton(label: 'Get Started Free', onTap: () => context.go('/signup')),
+                        const SizedBox(width: 16),
+                        _OutlineButton(label: 'Explore Training', isDark: isDark, onTap: () => context.go('/training')),
+                      ],
+                    ),
+              SizedBox(height: isMobile ? 32 : 56),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: isMobile ? 16 : 24,
+                runSpacing: isMobile ? 16 : 24,
                 children: [
                   _StatItem(value: '10K+', label: 'Active Athletes', isDark: isDark),
                   _StatItem(value: '500+', label: 'Expert Coaches', isDark: isDark),
@@ -179,19 +195,24 @@ class _TrustedBySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final orgs = ['Sports Authority of India', 'Olympic Committee', 'Fit India', 'Running Club India', 'National Sports Federation'];
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 24 : 48),
       color: isDark ? WebColors.darkSurface : WebColors.white,
       child: Column(
         children: [
           Text('Trusted By Leading Organizations',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: isDark ? WebColors.darkTextHint : WebColors.grey500)),
           const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: isMobile ? 16 : 32,
+            runSpacing: isMobile ? 12 : 16,
             children: orgs.map((org) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 4 : 16),
               child: Text(org,
                   style: TextStyle(
                       fontSize: 16,
@@ -211,6 +232,9 @@ class _FeaturesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final features = [
       _Feature(Icons.school, 'Expert Coaching', 'Connect with certified coaches across 20+ sports.'),
       _Feature(Icons.event, 'Event Discovery', 'Find and register for marathons, triathlons, and more.'),
@@ -220,7 +244,7 @@ class _FeaturesSection extends StatelessWidget {
       _Feature(Icons.group, 'Community', 'Join a community of 10,000+ like-minded athletes.'),
     ];
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 80),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 40 : 80),
       color: isDark ? WebColors.darkBackground : WebColors.grey50,
       child: Column(
         children: [
@@ -228,16 +252,16 @@ class _FeaturesSection extends StatelessWidget {
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: WebColors.primary)),
           const SizedBox(height: 12),
           Text('Powerful Features for Athletes',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+              style: TextStyle(fontSize: isMobile ? 24 : (isTablet ? 32 : 36), fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
           const SizedBox(height: 16),
           Text('All the tools you need to train smarter, compete better, and achieve your goals.',
-              style: TextStyle(fontSize: 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
-          const SizedBox(height: 48),
+              style: TextStyle(fontSize: isMobile ? 14 : 16, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+          SizedBox(height: isMobile ? 24 : 48),
           Wrap(
-            spacing: 32,
-            runSpacing: 32,
+            spacing: isMobile ? 16 : 32,
+            runSpacing: isMobile ? 16 : 32,
             children: features.map((f) => SizedBox(
-              width: 300,
+              width: isMobile ? double.infinity : 300,
               child: Container(
                 padding: const EdgeInsets.all(28),
                 decoration: BoxDecoration(
@@ -287,49 +311,80 @@ class _HowItWorksSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final steps = [
       _Step('01', 'Create Account', 'Sign up in seconds and set your athletic goals.'),
       _Step('02', 'Choose Your Path', 'Browse coaches, training plans, and events.'),
       _Step('03', 'Train & Compete', 'Follow your plan, track progress, and race.'),
     ];
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 80),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 40 : 80),
       color: isDark ? WebColors.darkSurface : WebColors.white,
       child: Column(
         children: [
           Text('How It Works', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: WebColors.primary)),
           const SizedBox(height: 12),
           Text('Get Started in 3 Steps',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
-          const SizedBox(height: 48),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: steps.map((s) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                children: [
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      gradient: WebColors.primaryGradient,
-                      borderRadius: BorderRadius.circular(16),
+              style: TextStyle(fontSize: isMobile ? 24 : (isTablet ? 32 : 36), fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+          SizedBox(height: isMobile ? 24 : 48),
+          isMobile
+              ? Column(
+                  children: steps.map((s) => Padding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            gradient: WebColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(s.num, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: WebColors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(s.title,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+                        const SizedBox(height: 8),
+                        Text(s.description,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                      ],
                     ),
-                    child: Center(
-                      child: Text(s.num, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: WebColors.white)),
+                  )).toList(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: steps.map((s) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            gradient: WebColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(s.num, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: WebColors.white)),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(s.title,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+                        const SizedBox(height: 8),
+                        Text(s.description,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(s.title,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
-                  const SizedBox(height: 8),
-                  Text(s.description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
-                ],
-              ),
-            )).toList(),
-          ),
+                  )).toList(),
+                ),
         ],
       ),
     );
@@ -349,12 +404,17 @@ class _StatsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 32 : 64),
       decoration: const BoxDecoration(gradient: WebColors.heroGradient),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: isMobile ? 16 : 48,
+        runSpacing: isMobile ? 24 : 32,
         children: const [
           _HeroStat(value: '10,000+', label: 'Active Athletes'),
           _HeroStat(value: '500+', label: 'Expert Coaches'),
@@ -392,27 +452,32 @@ class _TestimonialsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final testimonials = [
       _Testimonial('Arjun Mehta', 'Marathon Runner', 'Veltrix Sports completely changed how I train. My coach found here helped me cut 20 minutes off my marathon PR!'),
       _Testimonial('Priya Sharma', 'Triathlete', 'The event discovery feature is amazing. I found 3 triathlons in my first month and booked them all through the app.'),
       _Testimonial('Rahul Verma', 'Cycling Enthusiast', 'Best sports platform in India. The training plans are structured and the community keeps me motivated.'),
     ];
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 80),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 40 : 80),
       color: isDark ? WebColors.darkBackground : WebColors.grey50,
       child: Column(
         children: [
           Text('What Athletes Say', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: WebColors.primary)),
           const SizedBox(height: 12),
           Text('Loved by Athletes',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
-          const SizedBox(height: 48),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+              style: TextStyle(fontSize: isMobile ? 24 : (isTablet ? 32 : 36), fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+          SizedBox(height: isMobile ? 24 : 48),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: isMobile ? 12 : 16,
+            runSpacing: isMobile ? 16 : 24,
             children: testimonials.map((t) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: SizedBox(
-                width: 320,
+                width: isMobile ? double.infinity : 320,
                 child: Container(
                   padding: const EdgeInsets.all(28),
                   decoration: BoxDecoration(
@@ -463,23 +528,26 @@ class _CTASection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 80),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 40 : 80),
       color: isDark ? WebColors.darkSurface : WebColors.white,
       child: Center(
         child: Container(
-          padding: const EdgeInsets.all(56),
+          padding: EdgeInsets.all(isMobile ? 24 : 56),
           decoration: BoxDecoration(
             gradient: WebColors.heroGradient,
             borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
             children: [
-              const Text('Ready to Level Up Your Game?',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: WebColors.white)),
+              Text('Ready to Level Up Your Game?',
+                  style: TextStyle(fontSize: isMobile ? 22 : 32, fontWeight: FontWeight.bold, color: WebColors.white)),
               const SizedBox(height: 16),
-              const Text('Join 10,000+ athletes already training smarter with Veltrix Sports.',
-                  style: TextStyle(fontSize: 16, color: WebColors.white70)),
+              Text('Join 10,000+ athletes already training smarter with Veltrix Sports.',
+                  style: TextStyle(fontSize: isMobile ? 14 : 16, color: WebColors.white70)),
               const SizedBox(height: 32),
               Container(
                 decoration: BoxDecoration(color: WebColors.white, borderRadius: BorderRadius.circular(12)),
@@ -488,9 +556,9 @@ class _CTASection extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () => context.go('/signup'),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                      child: Text('Get Started Free →', style: TextStyle(color: WebColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 32, vertical: 16),
+                      child: Text('Get Started Free →', style: TextStyle(color: WebColors.primary, fontWeight: FontWeight.bold, fontSize: isMobile ? 14 : 16)),
                     ),
                   ),
                 ),

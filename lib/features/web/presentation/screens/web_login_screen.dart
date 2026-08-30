@@ -2,93 +2,213 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/constants/web_colors.dart';
+import '../../../../core/providers/auth_provider.dart';
 import '../../core/providers/web_providers.dart';
 
-class WebLoginScreen extends ConsumerWidget {
+class WebLoginScreen extends ConsumerStatefulWidget {
   const WebLoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WebLoginScreen> createState() => _WebLoginScreenState();
+}
+
+class _WebLoginScreenState extends ConsumerState<WebLoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+    try {
+      await ref.read(authProvider.notifier).login(email, password);
+      if (mounted) {
+        final authState = ref.read(authProvider);
+        if (authState.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(authState.error.toString())),
+          );
+        } else {
+          context.go('/dashboard');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final isDark = ref.watch(webDarkModeProvider);
     return Scaffold(
       backgroundColor: isDark ? WebColors.darkBackground : WebColors.white,
-      body: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: const EdgeInsets.all(48),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Welcome Back', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
-                      const SizedBox(height: 8),
-                      Text('Sign in to your Veltrix Sports account', style: TextStyle(fontSize: 15, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
-                      const SizedBox(height: 40),
-                      _buildTextField('Email', Icons.email_outlined, isDark),
-                      const SizedBox(height: 16),
-                      _buildTextField('Password', Icons.lock_outline, isDark, isPassword: true),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(onPressed: () {}, child: const Text('Forgot Password?', style: TextStyle(color: WebColors.primary))),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () => context.go('/dashboard'),
-                          style: ElevatedButton.styleFrom(backgroundColor: WebColors.primary, foregroundColor: WebColors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                          child: const Text('Sign In', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+      body: isMobile
+          ? SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(isMobile ? 20 : 48),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Welcome Back', style: TextStyle(fontSize: isMobile ? 26 : 32, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+                            const SizedBox(height: 8),
+                            Text('Sign in to your Veltrix Sports account', style: TextStyle(fontSize: 15, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                            const SizedBox(height: 40),
+                            _buildTextField('Email', Icons.email_outlined, isDark, controller: _emailController),
+                            const SizedBox(height: 16),
+                            _buildTextField('Password', Icons.lock_outline, isDark, isPassword: true, controller: _passwordController),
+                            const SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(onPressed: () {}, child: const Text('Forgot Password?', style: TextStyle(color: WebColors.primary))),
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _isLoading ? null : _handleLogin,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: WebColors.primary,
+                                  foregroundColor: WebColors.white,
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                                child: _isLoading
+                                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: WebColors.white, strokeWidth: 2))
+                                    : const Text('Sign In', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              Text("Don't have an account? ", style: TextStyle(color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                              GestureDetector(
+                                onTap: () => context.go('/signup'),
+                                child: const Text('Sign Up', style: TextStyle(color: WebColors.primary, fontWeight: FontWeight.w600)),
+                              ),
+                            ]),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Text("Don't have an account? ", style: TextStyle(color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
-                        GestureDetector(
-                          onTap: () => context.go('/signup'),
-                          child: const Text('Sign Up', style: TextStyle(color: WebColors.primary, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.all(48),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Welcome Back', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary)),
+                            const SizedBox(height: 8),
+                            Text('Sign in to your Veltrix Sports account', style: TextStyle(fontSize: 15, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                            const SizedBox(height: 40),
+                            _buildTextField('Email', Icons.email_outlined, isDark, controller: _emailController),
+                            const SizedBox(height: 16),
+                            _buildTextField('Password', Icons.lock_outline, isDark, isPassword: true, controller: _passwordController),
+                            const SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(onPressed: () {}, child: const Text('Forgot Password?', style: TextStyle(color: WebColors.primary))),
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _isLoading ? null : _handleLogin,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: WebColors.primary,
+                                  foregroundColor: WebColors.white,
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                                child: _isLoading
+                                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: WebColors.white, strokeWidth: 2))
+                                    : const Text('Sign In', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              Text("Don't have an account? ", style: TextStyle(color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary)),
+                              GestureDetector(
+                                onTap: () => context.go('/signup'),
+                                child: const Text('Sign Up', style: TextStyle(color: WebColors.primary, fontWeight: FontWeight.w600)),
+                              ),
+                            ]),
+                          ],
                         ),
-                      ]),
-                    ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: const BoxDecoration(gradient: WebColors.heroGradient),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 72, height: 72,
-                      decoration: BoxDecoration(color: WebColors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(18)),
-                      child: const Icon(Icons.play_arrow, color: WebColors.white, size: 48),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: const BoxDecoration(gradient: WebColors.heroGradient),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 72, height: 72,
+                            decoration: BoxDecoration(color: WebColors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(18)),
+                            child: const Icon(Icons.play_arrow, color: WebColors.white, size: 48),
+                          ),
+                          const SizedBox(height: 24),
+                          const Text('Veltrix Sports', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: WebColors.white)),
+                          const SizedBox(height: 8),
+                          const Text('Your Complete Sports Platform', style: TextStyle(color: WebColors.white70)),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    const Text('Veltrix Sports', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: WebColors.white)),
-                    const SizedBox(height: 8),
-                    const Text('Your Complete Sports Platform', style: TextStyle(color: WebColors.white70)),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
-  Widget _buildTextField(String label, IconData icon, bool isDark, {bool isPassword = false}) {
+  Widget _buildTextField(String label, IconData icon, bool isDark, {bool isPassword = false, TextEditingController? controller}) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
         labelText: label,

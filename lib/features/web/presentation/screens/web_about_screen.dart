@@ -8,56 +8,59 @@ class WebAboutScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    final isTablet = screenWidth >= 768 && screenWidth < 1024;
     final isDark = ref.watch(webDarkModeProvider);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : (isTablet ? 24 : 48), vertical: isMobile ? 32 : 64),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 800),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Text('About Veltrix Sports', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary))),
+              Center(child: Text('About Veltrix Sports', style: TextStyle(fontSize: isMobile ? 24 : 36, fontWeight: FontWeight.bold, color: isDark ? WebColors.darkTextPrimary : WebColors.textPrimary))),
               const SizedBox(height: 16),
               Center(
                 child: Text(
                   'Empowering athletes across India with the tools, coaching, and community they need to succeed.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary),
+                  style: TextStyle(fontSize: isMobile ? 15 : 18, color: isDark ? WebColors.darkTextSecondary : WebColors.textSecondary),
                 ),
               ),
-              const SizedBox(height: 48),
+              SizedBox(height: isMobile ? 24 : 48),
               _Section(
                 title: 'Our Mission',
                 body: 'Veltrix Sports was founded with a simple mission: to make world-class sports coaching, training resources, and event participation accessible to every athlete in India. We believe that talent is everywhere, but opportunity isn\'t always. Our platform bridges that gap.',
                 isDark: isDark,
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: isMobile ? 20 : 32),
               _Section(
                 title: 'What We Do',
                 body: 'We connect athletes with certified coaches, provide structured training plans for 20+ sports, discover and manage events from local fun runs to national championships, and offer seamless digital ticketing. Everything an athlete needs, in one platform.',
                 isDark: isDark,
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: isMobile ? 20 : 32),
               _Section(
                 title: 'Our Values',
                 body: 'Excellence in coaching. Inclusivity in access. Innovation in technology. Integrity in every interaction. These core values guide every feature we build and every partnership we form.',
                 isDark: isDark,
               ),
-              const SizedBox(height: 48),
+              SizedBox(height: isMobile ? 24 : 48),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(40),
+                padding: EdgeInsets.all(isMobile ? 24 : 40),
                 decoration: BoxDecoration(
                   gradient: WebColors.primaryGradient,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
                   children: [
-                    const Text('Join the Movement', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: WebColors.white)),
+                    Text('Join the Movement', style: TextStyle(fontSize: isMobile ? 20 : 24, fontWeight: FontWeight.bold, color: WebColors.white)),
                     const SizedBox(height: 8),
-                    const Text('10,000+ athletes are already training smarter.', style: TextStyle(color: WebColors.white70)),
+                    Text('10,000+ athletes are already training smarter.', style: TextStyle(color: WebColors.white70)),
                   ],
                 ),
               ),
