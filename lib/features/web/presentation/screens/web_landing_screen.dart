@@ -50,7 +50,7 @@ class _HeroSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 decoration: BoxDecoration(
-                  color: WebColors.primary.withOpacity(0.1),
+                  color: WebColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text('🚀 Trusted by 10,000+ athletes across India',
@@ -252,7 +252,7 @@ class _FeaturesSection extends StatelessWidget {
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: WebColors.primary.withOpacity(0.1),
+                        color: WebColors.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(f.icon, color: WebColors.primary),

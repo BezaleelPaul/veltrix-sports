@@ -90,7 +90,7 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: status == 'active' ? WebColors.accent.withOpacity(0.1) : WebColors.grey100,
+        color: status == 'active' ? WebColors.accent.withValues(alpha: 0.1) : WebColors.grey100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

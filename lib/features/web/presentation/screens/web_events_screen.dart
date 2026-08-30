@@ -41,7 +41,7 @@ class WebEventsScreen extends ConsumerWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: WebColors.secondary.withOpacity(0.1),
+                        color: WebColors.secondary.withValues(alpha: 0.1),
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                       ),
                       child: Column(

@@ -135,7 +135,7 @@ class _ContactCard extends StatelessWidget {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: WebColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: WebColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
             child: Icon(icon, color: WebColors.primary),
           ),
           const SizedBox(height: 12),

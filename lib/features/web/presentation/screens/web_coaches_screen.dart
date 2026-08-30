@@ -41,7 +41,7 @@ class WebCoachesScreen extends ConsumerWidget {
                       children: [
                         CircleAvatar(
                           radius: 32,
-                          backgroundColor: WebColors.primary.withOpacity(0.1),
+                          backgroundColor: WebColors.primary.withValues(alpha: 0.1),
                           child: Text(coach.name.split(' ').last[0], style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: WebColors.primary)),
                         ),
                         const SizedBox(width: 12),
@@ -79,7 +79,7 @@ class WebCoachesScreen extends ConsumerWidget {
                       children: coach.specializations.map((s) => Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: WebColors.primary.withOpacity(0.1),
+                          color: WebColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(s, style: const TextStyle(fontSize: 11, color: WebColors.primary)),
